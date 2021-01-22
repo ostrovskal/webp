@@ -1,0 +1,57 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'keyZX'
+            keyPassword 'IfnfkjdCthutqZX'
+            storeFile file('E:/Dev/Android/keys_store/sshZX.jks')
+            storePassword 'IfnfkjdCthutq'
+        }
+    }
+
+    compileSdkVersion 29
+    buildToolsVersion "30.0.3"
+    ndkVersion "22.0.7026061"
+
+    defaultConfig {
+        applicationId "com.example.webp"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++17"
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+            externalNativeBuild {
+                cmake { cppFlags "-DDEBUG" }
+            }
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled false
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
